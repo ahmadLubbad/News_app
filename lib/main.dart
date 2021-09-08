@@ -21,10 +21,21 @@ class MyApp extends StatelessWidget {
             statusBarBrightness: Brightness.dark,
           ),
           backgroundColor: Colors.white,
+          elevation: 0.0,
+          iconTheme: IconThemeData(
+            color: Colors.black,
+        ),
           titleTextStyle: TextStyle(
             color: Colors.black,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
           ),
         ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: Colors.deepOrange,
+          elevation: 25.0,
+        )
       ),
       home: NewsLayout(),
     );
