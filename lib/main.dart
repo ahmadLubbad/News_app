@@ -1,8 +1,12 @@
+// import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:news_app/layout/news_app/news_layout.dart';
+import 'package:news_app/network/remote/dio_helper.dart';
 
 void main() {
+  //Bloc.observer=MyBlocObserver();
+  DioHelper.init();
   runApp(MyApp());
 }
 
@@ -37,6 +41,10 @@ class MyApp extends StatelessWidget {
           elevation: 25.0,
         )
       ),
+      darkTheme: ThemeData(
+        scaffoldBackgroundColor: Colors.black,
+      ),
+      themeMode: ThemeMode.light,
       home: NewsLayout(),
     );
   }
