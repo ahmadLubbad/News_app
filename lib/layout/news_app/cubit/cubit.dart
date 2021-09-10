@@ -6,6 +6,7 @@ import 'package:news_app/modules/business/business_screen.dart';
 import 'package:news_app/modules/science/science_screen.dart';
 import 'package:news_app/modules/settings/settings_screen.dart';
 import 'package:news_app/modules/sports/sport_screen.dart';
+import 'package:news_app/network/remote/dio_helper.dart';
 
 class NewsCubit extends Cubit<NewsStates>
 {
@@ -44,4 +45,24 @@ class NewsCubit extends Cubit<NewsStates>
     currentIndex=index;
     emit(NewsBottomNavState());
   }
+
+  List<Map> business=[];
+
+  void getBusiness(){
+
+    DioHelper.getData(
+      url: 'v2/top-headlines',
+      query: {
+        'country':'eg',
+        'category':'business',
+        'apiKey': '26cebc680ed34ba795ed972cb49a6c6c'
+      },
+    ).then((value){
+      print("Value Data ::: ${value.data.toString()}");
+      print("Value  ::: ${value}");
+    }).catchError((error){
+      print("Error : ${error.toString()}");
+    });
+  }
+
 }
