@@ -31,6 +31,7 @@ dependencies:
   bloc: ^7.1.0
   flutter_bloc: ^7.2.0
   dio: ^4.0.0
+  conditional_builder: ^1.0.2
 
 dev_dependencies:
   flutter_test:

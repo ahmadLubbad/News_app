@@ -8,7 +8,7 @@ class NewsLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context)=>NewsCubit(),
+      create: (BuildContext context)=>NewsCubit()..getBusiness(),
       child: BlocConsumer<NewsCubit,NewsStates>(
         listener: (context,state){},
         builder: (context,state){
@@ -27,12 +27,12 @@ class NewsLayout extends StatelessWidget {
                 ),
               ],
             ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: (){
-                cubit.getBusiness();
-              },
-              child: Icon(Icons.add),
-            ),
+            // floatingActionButton: FloatingActionButton(
+            //   onPressed: (){
+            //     cubit.getBusiness();
+            //   },
+            //   child: Icon(Icons.add),
+            // ),
             body: cubit.screens[cubit.currentIndex],
             bottomNavigationBar: BottomNavigationBar(
               currentIndex: cubit.currentIndex,

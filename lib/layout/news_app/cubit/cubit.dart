@@ -42,13 +42,19 @@ class NewsCubit extends Cubit<NewsStates>
   ];
 
   void changeBottomNavBar(int index){
+    if(index==1)
+      getSports();
+    if(index==2)
+      getScience();
     currentIndex=index;
     emit(NewsBottomNavState());
   }
 
-  List<Map> business=[];
+  List<dynamic> business=[];
 
   void getBusiness(){
+    
+    emit(NewsGetBusinessLoadingState());
 
     DioHelper.getData(
       url: 'v2/top-headlines',
@@ -58,11 +64,78 @@ class NewsCubit extends Cubit<NewsStates>
         'apiKey': '26cebc680ed34ba795ed972cb49a6c6c'
       },
     ).then((value){
-      print("Value Data ::: ${value.data.toString()}");
-      print("Value  ::: ${value}");
+      // print("Value Data ::: ${value.data.toString()}");
+      // print("Value  ::: ${value}");
+      business=value.data['articles'];
+      print(business[0]['title']);
+      emit(NewsGetBusinessSuccessState());
     }).catchError((error){
       print("Error : ${error.toString()}");
+      emit(NewsGetBusinessErrorState(error.toString()));
     });
+  }
+
+
+  List<dynamic> sports=[];
+
+  void getSports(){
+
+    emit(NewsGetSportsLoadingState());
+
+    if(sports.length==0){
+      DioHelper.getData(
+        url: 'v2/top-headlines',
+        query: {
+          'country':'eg',
+          'category':'sports',
+          'apiKey': '26cebc680ed34ba795ed972cb49a6c6c'
+        },
+      ).then((value){
+        // print("Value Data ::: ${value.data.toString()}");
+        // print("Value  ::: ${value}");
+        sports=value.data['articles'];
+        print(sports[0]['title']);
+        emit(NewsGetSportsSuccessState());
+      }).catchError((error){
+        print("Error : ${error.toString()}");
+        emit(NewsGetSportsErrorState(error.toString()));
+      });
+    }else{
+      emit(NewsGetSportsSuccessState());
+    }
+  }
+
+
+
+  List<dynamic> science=[];
+
+  void getScience(){
+
+    emit(NewsGetScienceLoadingState());
+
+    if(science.length==0){
+      DioHelper.getData(
+        url: 'v2/top-headlines',
+        query: {
+          'country':'eg',
+          'category':'science',
+          'apiKey': '26cebc680ed34ba795ed972cb49a6c6c'
+        },
+      ).then((value){
+        // print("Value Data ::: ${value.data.toString()}");
+        // print("Value  ::: ${value}");
+        science=value.data['articles'];
+        print(science[0]['title']);
+        emit(NewsGetScienceSuccessState());
+      }).catchError((error){
+        print("Error : ${error.toString()}");
+        emit(NewsGetScienceErrorState(error.toString()));
+      });
+    }else{
+      emit(NewsGetScienceSuccessState());
+    }
+
+
   }
 
 }

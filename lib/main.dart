@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // primarySwatch: Colors.deepOrange,//To All Primary Swatch in App
+         primarySwatch: Colors.deepOrange,//To All Primary Swatch in App
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           backgroundColor: Colors.deepOrange,
         ),
@@ -49,7 +49,10 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.black,
       ),
       themeMode: ThemeMode.light,
-      home: NewsLayout(),
+      home: Directionality(
+        textDirection: TextDirection.rtl,
+          child: NewsLayout(),
+      ),
     );
   }
 }
