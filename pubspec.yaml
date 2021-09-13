@@ -32,6 +32,7 @@ dependencies:
   flutter_bloc: ^7.2.0
   dio: ^4.0.0
   conditional_builder: ^1.0.2
+  hexcolor: ^2.0.5
 
 dev_dependencies:
   flutter_test:

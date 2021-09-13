@@ -25,14 +25,14 @@ class NewsLayout extends StatelessWidget {
                   onPressed: (){},
                   icon:Icon( Icons.search),
                 ),
+                IconButton(
+                  icon:Icon( Icons.brightness_4_outlined),
+                  onPressed: (){
+                    NewsCubit.get(context).changeAppMode();
+                  },
+                ),
               ],
             ),
-            // floatingActionButton: FloatingActionButton(
-            //   onPressed: (){
-            //     cubit.getBusiness();
-            //   },
-            //   child: Icon(Icons.add),
-            // ),
             body: cubit.screens[cubit.currentIndex],
             bottomNavigationBar: BottomNavigationBar(
               currentIndex: cubit.currentIndex,
