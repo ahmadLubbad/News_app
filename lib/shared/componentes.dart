@@ -72,3 +72,50 @@ Widget articleBuilder(list,context) =>  ConditionalBuilder(
   ),
   fallback: (context)=>Center(child: CircularProgressIndicator(),),
 );
+
+Widget defaultFormField({
+  @required TextEditingController controller,
+  @required TextInputType type,
+  Function onSubmit,
+  Function onChang,
+  Function onTap,
+  bool isPassword = false,
+  @required Function validate,
+  @required String label,
+  @required IconData prefix,
+  IconData suffix,
+  Function suffixPressed,
+  bool readonly=false,
+}) =>
+    TextFormField(
+      controller: controller,
+      keyboardType: type,
+      obscureText: isPassword,
+      onFieldSubmitted: onSubmit,
+      onChanged: onChang,
+      readOnly: readonly,
+      onTap: onTap,
+      validator: validate,
+
+      decoration: InputDecoration(
+        labelText: label,
+
+        prefixIcon: Icon(prefix),
+
+        suffixIcon: suffix != null
+            ? IconButton(
+          onPressed: suffixPressed(),
+          icon: Icon(suffix),
+        )
+            : null,
+        border: OutlineInputBorder(),
+      ),
+    );
+
+
+void navigateTo(context,widget)=>Navigator.push
+  (
+    context,
+    MaterialPageRoute(
+        builder: (context)=>widget),
+);
