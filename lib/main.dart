@@ -3,15 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:news_app/layout/news_app/cubit/cubit.dart';
+import 'package:news_app/layout/news_app/cubit/bloc_observer.dart';
 import 'package:news_app/layout/news_app/cubit/states.dart';
 import 'package:news_app/layout/news_app/news_layout.dart';
 import 'package:news_app/network/local/cache_helper.dart';
 import 'package:news_app/network/remote/dio_helper.dart';
 
+import 'layout/news_app/cubit/mode_cubit.dart';
+
 void main()async {
   WidgetsFlutterBinding();
-  //Bloc.observer=MyBlocObserver();
+  Bloc.observer=SimpleBlocObserver();
   DioHelper.init();
   await CacheHelper.init();
   bool isDark=CacheHelper.getData(key: 'isDark');
@@ -19,21 +21,16 @@ void main()async {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
 
   final bool isDark;
-
   const MyApp( this.isDark);
-
   @override
   Widget build(BuildContext context) {
-    
-    
     return BlocProvider(
-      create: (BuildContext context)=>NewsCubit()..changeAppMode(
+      create: (BuildContext context)=>ModeCubit()..changeAppMode(
         fromShared: isDark,
       ),
-      child: BlocConsumer<NewsCubit,NewsStates>(
+      child: BlocConsumer<ModeCubit,ModeStates>(
         listener: (context,state){},
         builder: (context,state){
           return MaterialApp(
@@ -114,7 +111,7 @@ class MyApp extends StatelessWidget {
                 ),
               ),
             ),
-            themeMode: NewsCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
+            themeMode: ModeCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
             home: NewsLayout(),
           );
         },

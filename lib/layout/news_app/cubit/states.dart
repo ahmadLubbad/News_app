@@ -39,9 +39,6 @@ class NewsGetScienceErrorState extends NewsStates
 
 }
 
-class NewsAppChangeModeState extends NewsStates{}
-
-
 class NewsGetSearchLoadingState extends NewsStates{}
 
 class NewsGetSearchSuccessState extends NewsStates{}
@@ -53,3 +50,8 @@ class NewsGetSearchErrorState extends NewsStates
   NewsGetSearchErrorState(this.error);
 
 }
+
+abstract class ModeStates{}
+
+class NewsAppChangeModeState extends ModeStates{}
+class ModeMainState extends ModeStates{}

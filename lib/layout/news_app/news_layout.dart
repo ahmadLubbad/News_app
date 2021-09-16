@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/layout/news_app/cubit/cubit.dart';
+import 'package:news_app/layout/news_app/cubit/mode_cubit.dart';
 import 'package:news_app/layout/news_app/cubit/states.dart';
 import 'package:news_app/modules/search/search_screen.dart';
-import 'package:news_app/network/remote/dio_helper.dart';
 import 'package:news_app/shared/componentes.dart';
 
 class NewsLayout extends StatelessWidget {
@@ -32,7 +32,7 @@ class NewsLayout extends StatelessWidget {
                 IconButton(
                   icon:Icon( Icons.brightness_4_outlined),
                   onPressed: (){
-                    NewsCubit.get(context).changeAppMode();
+                    ModeCubit.get(context).changeAppMode();
                   },
                 ),
               ],
