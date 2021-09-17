@@ -9,34 +9,40 @@ import 'package:news_app/layout/news_app/news_layout.dart';
 import 'package:news_app/network/local/cache_helper.dart';
 import 'package:news_app/network/remote/dio_helper.dart';
 
+import 'layout/news_app/cubit/cubit.dart';
 import 'layout/news_app/cubit/mode_cubit.dart';
 
-void main()async {
+void main() async {
   WidgetsFlutterBinding();
-  Bloc.observer=SimpleBlocObserver();
+  Bloc.observer = SimpleBlocObserver();
   DioHelper.init();
   await CacheHelper.init();
-  bool isDark=CacheHelper.getData(key: 'isDark');
+  bool isDark = CacheHelper.getData(key: 'isDark');
   runApp(MyApp(isDark));
 }
 
 class MyApp extends StatelessWidget {
-
   final bool isDark;
-  const MyApp( this.isDark);
+  const MyApp(this.isDark);
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context)=>ModeCubit()..changeAppMode(
-        fromShared: isDark,
-      ),
-      child: BlocConsumer<ModeCubit,ModeStates>(
-        listener: (context,state){},
-        builder: (context,state){
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => NewsCubit()..getBusiness()),
+        BlocProvider(
+          create: (BuildContext context) => ModeCubit()
+            ..changeAppMode(
+              fromShared: isDark,
+            ),
+        ),
+      ],
+      child: BlocConsumer<ModeCubit, ModeStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
-              primarySwatch: Colors.deepOrange,//To All Primary Swatch in App
+              primarySwatch: Colors.deepOrange, //To All Primary Swatch in App
               floatingActionButtonTheme: FloatingActionButtonThemeData(
                 backgroundColor: Colors.deepOrange,
               ),
@@ -73,7 +79,7 @@ class MyApp extends StatelessWidget {
               ),
             ),
             darkTheme: ThemeData(
-              primarySwatch: Colors.deepOrange,//To All Primary Swatch in App
+              primarySwatch: Colors.deepOrange, //To All Primary Swatch in App
               floatingActionButtonTheme: FloatingActionButtonThemeData(
                 backgroundColor: Colors.deepOrange,
               ),
@@ -101,8 +107,7 @@ class MyApp extends StatelessWidget {
                   selectedItemColor: Colors.deepOrange,
                   unselectedItemColor: Colors.grey,
                   elevation: 25.0,
-                  backgroundColor: HexColor('1A1A1A')
-              ),
+                  backgroundColor: HexColor('1A1A1A')),
               textTheme: TextTheme(
                 bodyText1: TextStyle(
                   fontSize: 18.0,
@@ -111,7 +116,9 @@ class MyApp extends StatelessWidget {
                 ),
               ),
             ),
-            themeMode: ModeCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
+            themeMode: ModeCubit.get(context).isDark
+                ? ThemeMode.dark
+                : ThemeMode.light,
             home: NewsLayout(),
           );
         },
