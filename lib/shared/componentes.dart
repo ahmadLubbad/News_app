@@ -112,7 +112,7 @@ Widget myDivider()=>Padding(
   ),
 );
 
-Widget articleBuilder(list,context) =>ConditionalBuilder(
+Widget articleBuilder(list,context,{isSearch=false}) =>ConditionalBuilder(
   condition: list.length>0,
   builder:  (context)=> ListView.separated
     (
@@ -121,7 +121,7 @@ Widget articleBuilder(list,context) =>ConditionalBuilder(
     separatorBuilder: (context,index)=>myDivider(),
     itemCount: 10,
   ),
-  fallback: (context)=>Center(child: CircularProgressIndicator(),),
+  fallback: (context)=> isSearch ? Container() : Center(child: CircularProgressIndicator(),),
 );
 
 Widget defaultFormField({
